@@ -10,7 +10,7 @@ To-dos:
 <IF JOSS>
 - [ ] Activate Zenodo watching the repo
 - [ ] Tag and create a release so as to create a Zenodo version and DOI
-- [ ] Submit to JOSS using the Zenodo DOI.  We will tag it for expedited review.
+- [ ] Submit to JOSS at <https://joss.theoj.org/papers/new>. When a JOSS "PRE REVIEW" issue is generated for your paper, add the comment: `This package has been reviewed by rOpenSci: https://LINK.TO/THE/REVIEW/ISSUE, @ropensci/editors`
 <IF JOSS/>
 
 Should you want to acknowledge your reviewers in your package DESCRIPTION, you can do so by making them `"rev"`-type contributors in the `Authors@R` field (with their consent).  More info on this [here](https://ropensci.github.io/dev_guide/building.html#authorship).
