@@ -4,6 +4,8 @@
 
 ## 0.2.0
 
+* 2019-08-05, update JOSS submittal instructions in approval template
+
 * 2019-05-13, add more content to the chapter about contributing.
 
 * 2019-05-13, add more precise instructions about blog posts to approval template for editors.
