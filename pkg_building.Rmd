@@ -159,6 +159,85 @@ can be found at *link*".
         1. When you have a lot of documentation for a function/class/object separating out certain chunks of that documentation can keep your `.R` source file tidy. This is especially useful when you have a lot of code in that `.R` file.
         2. When you have the same documentation parts used across many `.R` functions it's helpful to use a template. This reduces duplicated text, and helps prevent mistakenly updating documentation for one function but not the other.
 
+### Documenting R6 Classes
+
+`roxygen2` does not currently completely/sufficiently support [R6](https://github.com/r-lib/R6) classes. In the meantime, here are some best practices for documenting R6 classes, starting with a brief complete example, then breaking down the pieces.
+
+```r
+#' Number cruncher
+#'
+#' @export
+#' @section Usage:
+#' \preformatted{Foo$new(x = 1)}
+#' @details
+#' **Methods**
+#'   \describe{
+#'     \item{`bar(y, z)`}{
+#'       Add y and z, and divide by x
+#'       \tabular{ll}{
+#'        y  \tab  an integer or numeric \cr
+#'        z  \tab  an integer or numeric \cr
+#'       }
+#'     }
+#'   }
+#' @format NULL
+#' @usage NULL
+#' @return numeric scalar
+#' @examples \dontrun{
+#' tmp <- Foo$new(x = 3)
+#' tmp$bar(5, 1)
+#' #> 2
+#' }
+Foo <- R6::R6Class(
+  'Foo',
+  public = list(
+    x = 1,
+    initialize = function(x = 1) {
+      self$x <- x
+    },
+    bar = function(y, z) {
+      (y + z) / self$x
+    }
+  )
+)
+```
+
+Instead of using `@usage`, create a section for usage, like:
+
+```r
+#' @section Usage:
+#' \preformatted{p <- Foo$new(x = 0)}
+```
+
+Set `@format` to not be used because it creates something not very useful:
+
+```r
+#' @format NULL
+```
+
+Create a section, could be under `@details` or in `@section Details:` or similar, with information on each public method in your R6 class.
+
+```r
+#' @details
+#' **Methods**
+#'   \describe{
+#'     \item{`bar(y, z)`}{
+#'       Make a GET request
+#'       \tabular{ll}{
+#'        arg1  \tab  description \cr
+#'        arg2  \tab  description \cr
+#'       }
+#'     }
+#'   }
+```
+
+There's no one size fits all approach for documenting R6. You can find
+additional suggestions in the [mlr3 roxygen guide][mlr3guide], among
+other places. Some R6 classes are small and can be documented easily in
+a single manual page, whereas in other cases one may want separate manual
+pages for each method, or groups of methods.
+
+
 ## Documentation website {#website}
 
 We recommend creating a documentation website for your package using [`pkgdown`](https://github.com/hadley/pkgdown). [Here](http://enpiar.com/2017/11/21/getting-down-with-pkgdown/) is a good tutorial to get started with `pkgdown`, and unsurprisingly `pkgdown` has a [its own documentation website](http://pkgdown.r-lib.org/).
@@ -319,3 +398,4 @@ This is a collection of CRAN gotchas that are worth avoiding at the outset.
 [rjson]: https://cran.rstudio.com/web/packages/rjson/
 [RJSONIO]: https://cran.rstudio.com/web/packages/RJSONIO/
 [xml2]: https://cran.rstudio.com/web/packages/xml2/
+[mlr3guide]: https://github.com/mlr-org/mlr3/wiki/Roxygen-Guide
